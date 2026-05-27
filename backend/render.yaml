@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: linguaai-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: CORS_ORIGINS
+        sync: false
+      - key: LIBRETRANSLATE_URL
+        value: https://libretranslate.com
+      - key: LIBRETRANSLATE_API_KEY
+        sync: false
+      - key: GOOGLE_TRANSLATE_API_KEY
+        sync: false
