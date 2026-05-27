@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 
-from models.schemas import TranslateRequest, TranslateResponse
-from services.detector import detect_language
-from services.translator import translate_text
+from backend.models.schemas import TranslateRequest, TranslateResponse
+from backend.services.detector import detect_language
+from backend.services.translator import translate_text
 
 router = APIRouter()
 

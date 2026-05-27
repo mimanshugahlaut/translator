@@ -3,7 +3,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import detect, languages, translate
+from backend.routers import detect, languages, translate
 
 app = FastAPI(
     title="LinguaAI API",

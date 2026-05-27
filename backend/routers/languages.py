@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from models.schemas import LanguageItem, LanguagesResponse
-from services.translator import get_languages
+from backend.models.schemas import LanguageItem, LanguagesResponse
+from backend.services.translator import get_languages
 
 router = APIRouter()
 

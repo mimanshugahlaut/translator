@@ -3,7 +3,8 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from main import app
+# Import app as a package so tests work when run from repository root (CI)
+from backend.main import app
 
 
 class APISmokeTests(unittest.TestCase):
@@ -25,7 +26,7 @@ class APISmokeTests(unittest.TestCase):
         self.assertGreater(len(payload["languages"]), 0)
         self.assertEqual(payload["languages"][0]["code"], "af")
 
-    @patch("routers.detect.detect_language", return_value=("en", "English", 0.97))
+    @patch("backend.routers.detect.detect_language", return_value=("en", "English", 0.97))
     def test_detect_endpoint(self, mock_detect):
         response = self.client.post("/detect", json={"text": "Hello world"})
         self.assertEqual(response.status_code, 200)
@@ -35,8 +36,8 @@ class APISmokeTests(unittest.TestCase):
         )
         mock_detect.assert_called_once_with("Hello world")
 
-    @patch("routers.translate.translate_text", return_value=("Hola Mundo", "en", 0.9))
-    @patch("routers.translate.detect_language", return_value=("en", "English", 0.97))
+    @patch("backend.routers.translate.translate_text", return_value=("Hola Mundo", "en", 0.9))
+    @patch("backend.routers.translate.detect_language", return_value=("en", "English", 0.97))
     def test_translate_endpoint(self, mock_detect, mock_translate):
         response = self.client.post(
             "/translate",

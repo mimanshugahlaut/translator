@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from models.schemas import DetectRequest, DetectResponse
-from services.detector import detect_language
+from backend.models.schemas import DetectRequest, DetectResponse
+from backend.services.detector import detect_language
 
 router = APIRouter()
 
