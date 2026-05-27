@@ -1,0 +1,31 @@
+name: Deploy Frontend to Vercel
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install frontend deps
+        working-directory: frontend
+        run: |
+          npm ci
+      - name: Deploy to Vercel (CLI)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN must be set in repository secrets." >&2
+            exit 1
+          fi
+          # Use Vercel CLI to deploy the `frontend` folder. Provide org/project IDs if available.
+          npx vercel@28 --cwd frontend --token "$VERCEL_TOKEN" --confirm --prod ${VERCEL_ORG_ID:+--org $VERCEL_ORG_ID} ${VERCEL_PROJECT_ID:+--project $VERCEL_PROJECT_ID}
