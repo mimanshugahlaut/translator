@@ -160,4 +160,4 @@ The UI translated `Hello world` to Hindi successfully during the smoke test.
 
 ## License
 
-MIT
+No license file is included in this repository.
